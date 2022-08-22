@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<!-- jplaced
+ 2022, Universidad de Zaragoza -->
+
+<!-- Robot standalone -->
+
+<robot  name="kobuki_standalone"
+        xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+        xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+        xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+        xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Defines the kobuki component tag. -->
+  <xacro:include filename="$(find robot_description)/launch/include/urdf/kobuki_camera.urdf.xacro" />
+  <xacro:kobuki/>
+</robot>

@@ -1,0 +1,7 @@
+# jplaced
+# 2022, Universidad de Zaragoza
+# This file contains common configuration options for the base local planner
+# See http://wiki.ros.org/base_local_planner
+
+NavfnROS:
+  allow_unknown: true

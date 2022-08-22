@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>frontier_detector</name>
+  <version>0.0.0</version>
+  <description>The frontier_detector package</description>
+
+  <maintainer email="jplaced@unizar.es">julio</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- build_depend + build_export_depend + exec_depend -->
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>tf</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>dynamic_reconfigure</depend>
+  <depend>octomap_ros</depend>
+  <depend>orb_slam2_ros</depend>
+
+  <build_depend>message_generation</build_depend>
+
+  <build_export_depend>message_runtime</build_export_depend>
+
+  <exec_depend>message_runtime</exec_depend>
+
+  <export>
+
+  </export>
+</package>

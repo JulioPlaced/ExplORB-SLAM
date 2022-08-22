@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>kobuki_plugins</name>
+  <version>0.5.7</version>
+  <description>Kobuki-specific ROS plugins for Gazebo</description>
+  <maintainer email="marcus.liebhardt@yujinrobot.com">Marcus Liebhardt</maintainer>
+  <license>BSD</license>
+  <url type="website">http://ros.org/wiki/kobuki_gazebo_plugins</url>
+  <url type="repository">https://github.com/yujinrobot/kobuki_desktop</url>
+  <url type="bugtracker">https://github.com/yujinrobot/kobuki_desktop/issues</url>
+  <author>Marcus Liebhardt</author>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- build_depend + build_export_depend + exec_depend -->
+  <depend>roscpp</depend>
+  <depend>boost</depend>
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_plugins</depend>
+  <depend>geometry_msgs</depend>
+  <depend>kobuki_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf</depend>
+
+
+</package>

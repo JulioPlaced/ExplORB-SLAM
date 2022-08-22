@@ -1,0 +1,71 @@
+<!-- jplaced@unizar.es
+ 2021, Universidad de Zaragoza -->
+
+<!-- Move base with SLAM system -->
+
+<launch>
+
+    <master auto="start"/>
+
+    <arg name="namespace"/>
+    <arg name="octomap_resolution" value="0.05"/>
+    <param name="use_sim_time" value="true" />
+
+    <node name="orb_slam2_rgbd" pkg="orb_slam2_ros" type="orb_slam2_ros_rgbd" output="screen" respawn="false">
+        <remap from="/camera/rgb/image_raw" to="$(arg namespace)/camera/rgb/image_raw" />
+        <remap from="/camera/depth_registered/image_raw" to="$(arg namespace)/camera/depth_registered/image_raw" />
+        <remap from="/camera/rgb/camera_info" to="$(arg namespace)/camera/rgb/camera_info" />
+        <remap from="/odom" to="$(arg namespace)/odom" />
+
+        <param name="publish_pointcloud" type="bool" value="true" />
+        <param name="publish_pose" type="bool" value="true" />
+        <param name="localize_only" type="bool" value="false" />
+        <param name="reset_map" type="bool" value="false" />
+
+        <param name="pointcloud_frame_id" type="string" value="map" />
+        <param name="camera_frame_id" type="string" value="base_footprint" />
+        <param name="target_frame_id" type="string" value="base_footprint" />
+
+        <param name="load_map" type="bool" value="false" />
+        <param name="map_file" type="string" value="map.bin" />
+        <param name="voc_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/Vocabulary/ORBvoc.txt" />
+        <param name="min_num_kf_in_map" type="int" value="5" />
+
+        <param name="/ORBextractor/nFeatures" type="int" value="1000" />
+        <param name="/ORBextractor/scaleFactor" type="double" value="1.2" />
+        <param name="/ORBextractor/nLevels" type="int" value="8" />
+        <param name="/ORBextractor/iniThFAST" type="int" value="20" />
+        <param name="/ORBextractor/minThFAST" type="int" value="7" />
+
+        <param name="camera_fps" type="int" value="30" />
+        <param name="camera_bf" type="int" value="72" />
+        <param name="camera_rgb_encoding" type="bool" value="true" />
+        <param name="ThDepth" type="double" value="30.0" />
+        <param name="depth_map_factor" type="double" value="1.0" />
+        <param name="load_calibration_from_cam" type="bool" value="true" />
+    </node>
+
+    <group ns="$(arg namespace)">
+        <node pkg="move_base" type="move_base" respawn="false" name="move_base_node" output="screen">
+            <remap from="cmd_vel" to="mobile_base/commands/velocity"/>
+            <remap from="move_base_node/TebLocalPlannerROS/global_plan" to="move_base_node/global_plan"/>
+            <remap from="move_base_node/TebLocalPlannerROS/local_plan" to="move_base_node/local_plan"/>
+
+            <rosparam file="$(find robot_description)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+            <rosparam file="$(find robot_description)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find robot_description)/param/local_costmap_params.yaml" command="load" />
+            <rosparam file="$(find robot_description)/param/global_costmap_params.yaml" command="load" />
+            <rosparam file="$(find robot_description)/param/base_global_planner_params.yaml" command="load" />
+
+            <!-- Time elastic band local planner -->
+            <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+            <param name="controller_frequency" value="10.0" />
+            <rosparam file="$(find robot_description)/param/teb_base_local_planner_params.yaml" command="load" />
+
+            <param name="max_planning_retries" value="1"/>
+            <param name="recovery_behavior_enabled" value="false"/>
+            <rosparam file="$(find robot_description)/param/recovery_behaviors.yaml" command="load" />
+        </node>
+    </group>
+
+</launch>

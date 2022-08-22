@@ -1,0 +1,13 @@
+build
+devel
+logs
+.catkin_tools
+
+
+src/frontier_detector/src/python/__pycache__
+src/decision_maker/src/python/__pycache__
+
+src/3dParty/orb_slam_2_ros/gtest
+src/3dParty/orb_slam_2_ros/orb_slam2/lib
+src/3dParty/orb_slam_2_ros/orb_slam2/Thirdparty/DBoW2/lib
+src/3dParty/orb_slam_2_ros/orb_slam2/Thirdparty/g2o/lib

@@ -1,0 +1,22 @@
+# jplaced
+# 2022, Universidad de Zaragoza
+# This file contains common configuration options for recovery behaviors
+# See http://wiki.ros.org/rotate_recovery & http://wiki.ros.org/clear_costmap_recovery?distro=noetic
+
+recovery_behaviors:
+  # - name: 'rotate_recovery'
+  #   type: 'rotate_recovery/RotateRecovery'
+  # - name: 'conservative_reset'
+  #   type: 'clear_costmap_recovery/ClearCostmapRecovery'
+  - name: 'aggressive_reset'
+    type: 'clear_costmap_recovery/ClearCostmapRecovery'
+
+# conservative_reset:
+#   force_updating: true
+#   affected_maps: both
+#   reset_distance: 1.5
+
+aggressive_reset:
+  force_updating: true
+  affected_maps: both
+  reset_distance: 5.0

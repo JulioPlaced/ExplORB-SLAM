@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+
+<!-- jplaced
+ 2022, Universidad de Zaragoza -->
+
+<!-- Gazebo URDF of robot with camera & laser  -->
+
+<robot name="kobuki_sim_camera" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="kobuki_sim_camera">
+	  <gazebo reference="wheel_left_link">
+	    <mu1>1.0</mu1>
+	    <mu2>1.0</mu2>
+	    <kp>1000000.0</kp>
+	    <kd>100.0</kd>
+	    <minDepth>0.001</minDepth>
+	    <maxVel>1.0</maxVel>
+	  </gazebo>
+
+	  <gazebo reference="wheel_right_link">
+	    <mu1>1.0</mu1>
+	    <mu2>1.0</mu2>
+	    <kp>1000000.0</kp>
+	    <kd>100.0</kd>
+	    <minDepth>0.001</minDepth>
+	    <maxVel>1.0</maxVel>
+	  </gazebo>
+
+	  <gazebo reference="caster_front_link">
+	    <mu1>0.0</mu1>
+	    <mu2>0.0</mu2>
+	    <kp>1000000.0</kp>
+	    <kd>100.0</kd>
+	    <minDepth>0.001</minDepth>
+	    <maxVel>1.0</maxVel>
+	  </gazebo>
+
+	  <gazebo reference="caster_back_link">
+	    <mu1>0.0</mu1>
+	    <mu2>0.0</mu2>
+	    <kp>1000000.0</kp>
+	    <kd>100.0</kd>
+	    <minDepth>0.001</minDepth>
+	    <maxVel>1.0</maxVel>
+	  </gazebo>
+
+	  <gazebo reference="base_link">
+	    <mu1>0.3</mu1>
+	    <mu2>0.3</mu2>
+	    <sensor type="contact" name="bumpers">
+	      <always_on>1</always_on>
+	      <update_rate>50.0</update_rate>
+	      <visualize>true</visualize>
+	      <contact>
+	        <collision>base_footprint_collision_base_link</collision>
+	      </contact>
+	    </sensor>
+	  </gazebo>
+
+	  <gazebo reference="cliff_sensor_left_link">
+	    <sensor type="ray" name="cliff_sensor_left">
+	      <always_on>true</always_on>
+	      <update_rate>50</update_rate>
+	      <visualize>true</visualize>
+	      <ray>
+	        <scan>
+	          <horizontal>
+	            <samples>50</samples>
+	            <resolution>1.0</resolution>
+	            <min_angle>-0.0436</min_angle>  <!-- -2.5 degree -->
+	            <max_angle>0.0436</max_angle> <!-- 2.5 degree -->
+	          </horizontal>
+<!--            Can't use vertical rays until this bug is resolved: -->
+<!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
+<!-- 	          <vertical> -->
+<!-- 	            <samples>50</samples> -->
+<!-- 	            <resolution>1.0</resolution> -->
+<!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
+<!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
+<!-- 	          </vertical> -->
+	        </scan>
+	        <range>
+	          <min>0.01</min>
+	          <max>0.15</max>
+	          <resolution>1.0</resolution>
+	        </range>
+	      </ray>
+	    </sensor>
+	  </gazebo>
+
+	  <gazebo reference="cliff_sensor_right_link">
+	    <sensor type="ray" name="cliff_sensor_right">
+	      <always_on>true</always_on>
+	      <update_rate>50</update_rate>
+	      <visualize>true</visualize>
+	      <ray>
+	        <scan>
+	          <horizontal>
+	            <samples>50</samples>
+	            <resolution>1.0</resolution>
+	            <min_angle>-0.0436</min_angle>  <!-- -2.5 degree -->
+	            <max_angle>0.0436</max_angle> <!-- 2.5 degree -->
+	          </horizontal>
+<!--            Can't use vertical rays until this bug is resolved: -->
+<!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
+<!-- 	          <vertical> -->
+<!-- 	            <samples>50</samples> -->
+<!-- 	            <resolution>1.0</resolution> -->
+<!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
+<!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
+<!-- 	          </vertical> -->
+	        </scan>
+	        <range>
+	          <min>0.01</min>
+	          <max>0.15</max>
+	          <resolution>1.0</resolution>
+	        </range>
+	      </ray>
+	    </sensor>
+	  </gazebo>
+
+	  <gazebo reference="cliff_sensor_front_link">
+	    <sensor type="ray" name="cliff_sensor_front">
+	      <always_on>true</always_on>
+	      <update_rate>50</update_rate>
+	      <visualize>true</visualize>
+	      <ray>
+	        <scan>
+	          <horizontal>
+	            <samples>50</samples>
+	            <resolution>1.0</resolution>
+	            <min_angle>-0.0436</min_angle>  <!-- -2.5 degree -->
+	            <max_angle>0.0436</max_angle> <!-- 2.5 degree -->
+	          </horizontal>
+<!-- 	          Can't use vertical rays until this bug is resolved: -->
+<!--            https://bitbucket.org/osrf/gazebo/issue/509/vertical-sensor-doesnt-works -->
+<!-- 	          <vertical> -->
+<!-- 	            <samples>50</samples> -->
+<!-- 	            <resolution>1.0</resolution> -->
+<!-- 	            <min_angle>-0.0436</min_angle>  -2.5 degree -->
+<!-- 	            <max_angle>0.0436</max_angle> 2.5 degree -->
+<!-- 	          </vertical> -->
+	        </scan>
+	        <range>
+	          <min>0.01</min>
+	          <max>0.15</max>
+	          <resolution>1.0</resolution>
+	        </range>
+	      </ray>
+	    </sensor>
+	  </gazebo>
+
+	  <gazebo reference="gyro_link">
+	   <sensor type="imu" name="imu">
+        <always_on>true</always_on>
+        <update_rate>50</update_rate>
+        <visualize>false</visualize>
+        <imu>
+          <noise>
+            <type>gaussian</type>
+	          <rate>
+	            <mean>0.0</mean>
+	            <stddev>${0.0014*0.0014}</stddev> <!-- 0.25 x 0.25 (deg/s) -->
+	            <bias_mean>0.0</bias_mean>
+	            <bias_stddev>0.0</bias_stddev>
+	          </rate>
+		        <accel> <!-- not used in the plugin and real robot, hence using tutorial values -->
+			        <mean>0.0</mean>
+			        <stddev>1.7e-2</stddev>
+			        <bias_mean>0.1</bias_mean>
+			        <bias_stddev>0.001</bias_stddev>
+		        </accel>
+          </noise>
+	      </imu>
+      </sensor>
+	  </gazebo>
+
+	  <gazebo>
+	    <plugin name="kobuki_controller" filename="libgazebo_ros_kobuki.so">
+	      <publish_tf>false</publish_tf>
+	      <left_wheel_joint_name>wheel_left_joint</left_wheel_joint_name>
+	      <right_wheel_joint_name>wheel_right_joint</right_wheel_joint_name>
+	      <wheel_separation>0.230</wheel_separation>
+	      <wheel_diameter>0.070</wheel_diameter>
+	      <torque>1.0</torque>
+	      <velocity_command_timeout>0.6</velocity_command_timeout>
+	      <cliff_sensor_left_name>cliff_sensor_left</cliff_sensor_left_name>
+	      <cliff_sensor_center_name>cliff_sensor_front</cliff_sensor_center_name>
+	      <cliff_sensor_right_name>cliff_sensor_right</cliff_sensor_right_name>
+	      <cliff_detection_threshold>0.08</cliff_detection_threshold>
+	      <bumper_name>bumpers</bumper_name>
+        <imu_name>imu</imu_name>
+        <rosDebugLevel>na</rosDebugLevel>
+        <update_rate>20</update_rate>
+	    </plugin>
+	  </gazebo>
+
+ <!-- Lidar -->
+  <gazebo reference="base_laser_link">
+    <sensor type="gpu_ray" name="head_hokuyo_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>3000</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>15</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_gpu_laser.so">
+        <!-- <robotNamespace>robot_1</robotNamespace> -->
+        <topicName>base_scan</topicName>
+        <frameName>base_laser_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- camera -->
+  <gazebo reference="camera_link">
+    <!-- RGBD -->
+    <sensor name="camera" type="depth">
+      <update_rate>30</update_rate>
+      <camera>
+        <horizontal_fov>1.57</horizontal_fov>
+        <image>
+          <width>720</width>
+          <height>720</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>10.0</far>
+        </clip>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>1.0</updateRate>
+        <!-- <robotNamespace>robot_1</robotNamespace> -->
+        <cameraName>camera</cameraName>
+        <imageTopicName>rgb/image_raw</imageTopicName>
+        <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
+        <depthImageTopicName>depth_registered/image_raw</depthImageTopicName>
+        <depthImageInfoTopicName>depth_registered/camera_info</depthImageInfoTopicName>
+        <pointCloudTopicName>depth_registered/points</pointCloudTopicName>
+        <frameName>camera_link_optical</frameName>
+        <pointCloudCutoff>0.05</pointCloudCutoff>
+        <pointCloudCutoffMax>10.0</pointCloudCutoffMax>
+
+        <baseline>0.2</baseline>
+        <focalLength>360.286792</focalLength>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+        <CxPrime>360</CxPrime>
+        <Cx>360.0</Cx>
+        <Cy>360.0</Cy>
+        <hackBaseline>0.0</hackBaseline>
+      </plugin>
+    </sensor>
+
+<!--    focal_length = width_ / (2.0 * tan(HFOV/2.0)) -->
+
+  </gazebo>
+
+  </xacro:macro>
+</robot>

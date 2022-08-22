@@ -1,0 +1,41 @@
+<!-- jplaced
+ 2022, Universidad de Zaragoza -->
+
+<!--  Launch file for single robot on Gazebo -->
+
+<launch>
+
+    <arg name="gazebo_gui" value="false"/>
+    <arg name="gazebo_verbose" value="false"/>
+    <arg name="robot_ns" value="robot_1"/>
+
+    <env name="GAZEBO_RESOURCE_PATH" value="$(find robot_description)/launch/include/meshes"/>
+    <env name="GAZEBO_MODEL_PATH" value="$(find robot_description)/launch/include/models/aws/bookstore"/>
+
+    <!-- Launch world -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="gui" value="$(arg gazebo_gui)"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="debug" value="0"/>
+        <arg name="world_name" value="$(find robot_description)/launch/include/worlds/aws_bookstore.world"/>
+        <arg name="verbose" value="$(arg gazebo_verbose)"/>
+    </include>
+
+    <!-- Launch robot -->
+    <include file="$(find robot_description)/launch/include/robot.launch.xml">
+        <arg name="robot_name" value="$(arg robot_ns)"/>
+        <arg name="init_pose" value="-x 0.0 -y 0.0 -z 0.0
+                                     -R 0.0 -P 0.0 -Y 0.0"/>
+    </include>
+
+    <!-- Launch move base -->
+    <include file="$(find robot_description)/launch/include/move_base_ORBSLAM.launch">
+        <arg name="namespace" value="$(arg robot_ns)"/>
+    </include>
+
+    <!-- Launch visualizer -->
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find robot_description)/launch/include/rviz_config/config.rviz">
+        <remap from="move_base_simple/goal" to="$(arg robot_ns)/move_base_simple/goal"/>
+    </node>
+
+</launch>

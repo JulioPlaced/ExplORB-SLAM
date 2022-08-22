@@ -1,0 +1,98 @@
+<!-- jplaced
+ 2022, Universidad de Zaragoza -->
+
+<!-- Launch file -->
+<launch>
+
+    <!-- ROS parameters -->
+    <param name="namespace_init_count"  value="1"/>
+    <param name="use_sim_time"          value="true" />
+
+    <!-- Inherited args -->
+    <arg name="map_topic_name"  default="/gridmapper/rectified_map"/>
+    <arg name="global_frame"    default="map"/>
+    <arg name="robot_namespace" default="robot_1"/>
+    <arg name="robot_number"    default="1"/>
+    <arg name="gpu"             default="true" />
+    <arg name="camera_type"     default="rgbd" />
+
+    <!-- New args -->
+    <arg name="robot_frame" value="base_footprint" />
+    <arg name="local_eta"   value="0.75"/>
+    <arg name="global_eta"  value="1.0"/>
+    <arg name="rate_detectors_hz"   value="10"/>
+    <arg name="rate_filter_hz"      value="10"/>
+    <arg name="rate_octo_hz"        value="1"/>
+    <arg name="rate_grid_hz"        value="2"/>
+
+    <!-- OctoMap / OccupancyMap creator -->
+    <node pkg="frontier_detector" type="frontier_detector_octomapper" name="octomapper" output="screen" required="true">
+        <remap from="/map_points" to="/orb_slam2_$(arg camera_type)/map_points" />
+        <remap from="/info/state" to="/orb_slam2_$(arg camera_type)/info/state" />
+        <remap from="/gba_running" to="/orb_slam2_$(arg camera_type)/gba_running" />
+
+        <param name="/rate" value="$(arg rate_octo_hz)" />
+        <param name="/target_frame_id"      value="$(arg robot_frame)"/>
+        <param name="/pointcloud_frame_id"  value="$(arg global_frame)"/>
+        <param name="/octomap/rebuild"      value="false"/>
+        <param name="/max_height"           value="3.0"/>
+    </node>
+
+    <node pkg="frontier_detector" type="frontier_detector_gridmapper" name="gridmapper" output="screen" required="true">
+        <remap from="/gba_running" to="/orb_slam2_$(arg camera_type)/gba_running" />
+
+        <param name="/rate" value="$(arg rate_grid_hz)" />
+        <param name="/occupancy/publish_occupancy_grid"         value="true"/>
+        <param name="/occupancy/publish_occupancy_grid_rect"    value="true" />
+        <param name="/target_frame_id"      value="$(arg robot_frame)"/>
+        <param name="/pointcloud_frame_id"  value="$(arg global_frame)"/>
+        <param name="/occupancy/projected_map/min_height" value="0.12"/>
+        <param name="/occupancy/projected_map/max_height" value="2.1"/>
+    </node>
+
+    <arg name="ns" value="frontier_detectors"/>
+    <group ns="$(arg ns)">
+
+        <!-- OpenCV based frontier detector  -->
+        <node pkg="frontier_detector" type="OpenCV_detector.py" name="opencv_detector" output="screen" respawn="true">
+            <param name="map_topic" value="$(arg map_topic_name)"/>
+            <param name="rate"      value="$(arg rate_detectors_hz)" />
+        </node>
+
+        <!-- Global map frontier detector  -->
+        <node pkg="frontier_detector" type="frontier_detector_global_rrt" name="global_detector" output="screen" respawn="true">
+            <param name="map_topic" value="$(arg map_topic_name)"/>
+            <param name="rate"      value="$(arg rate_detectors_hz)" />
+            <param name="eta"       value="$(arg global_eta)"/>
+        </node>
+
+        <!-- Local map frontier detector  -->
+        <node pkg="frontier_detector" type="frontier_detector_local_rrt" name="local_detector" output="screen" respawn="true">
+            <param name="map_topic"     value="$(arg map_topic_name)"/>
+            <param name="robot_frame"   value="$(arg robot_frame)"/>
+            <param name="rate"          value="$(arg rate_detectors_hz)" />
+            <param name="eta"           value="$(arg local_eta)"/>
+        </node>
+
+        <!-- Filter fusion of frontier detectors  -->
+        <node pkg="frontier_detector" type="Filter.py" name="filter" output="screen" respawn="true" respawn_delay="3">
+            <param name="global_costmap_topic"          value="/$(arg robot_namespace)/move_base_node/global_costmap/costmap"/>
+            <param name="costmap_clearing_threshold"    value="70"/>
+            <param name="information_threshold"         value="0.5"/>
+            <param name="enable_gpu_comp"               value="$(arg gpu)"/>
+            <param name="map_topic"     value="$(arg map_topic_name)"/>
+            <param name="goals_topic"   value="detected_points"/>
+            <param name="rate"          value="$(arg rate_filter_hz)"/>
+            <param name="n_robots"      value="$(arg robot_number)"/>
+            <param name="info_radius"   value="0.5"/>
+            <param name="max_t"         value="1.0"/>
+        </node>
+
+        <!-- Initializer of local/global frontier detectors  -->
+        <node pkg="frontier_detector" type="Initializer.py" name="point_init" output="screen">
+            <param name="rate" value="1.0"/>
+        </node>
+
+    </group>
+
+</launch>

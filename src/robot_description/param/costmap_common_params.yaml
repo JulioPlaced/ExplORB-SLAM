@@ -1,0 +1,77 @@
+# jplaced
+# 2022, Universidad de Zaragoza
+# This file contains common configuration options for the costmaps http://www.ros.org/wiki/costmap_2d
+
+# If seconds between transforms > transform_tolerance, throws error
+transform_tolerance: 1.2
+# footprint: [[-0.127, -0.127], [-0.18, 0.0], [-0.127, 0.127], [0.0, 0.18], [0.127, 0.127], [0.18, 0.0], [0.127, -0.127], [0.0, -0.18]]
+# robot_radius: 0.16
+robot_radius: 0.15
+footprint_padding: 0.03
+
+################################################################################
+#   OBSTACLE MAP LAYER
+################################################################################
+# Sensors the costmap will use to update the map
+observation_sources: laser_scan_sensor # point_cloud_sensor2 point_cloud_sensor
+
+# Main sensor
+# point_cloud_sensor: { sensor_frame: camera_link,
+#                       data_type: PointCloud2,
+#                       topic: robot_1/orb_slam/map_points,
+#                       expected_update_rate: 1.0,
+#                       marking: true,
+#                       clearing: true,
+#                       max_obstacle_height: 1.0,
+#                       min_obstacle_height: 0.1}
+
+# Second source used to clear ghost obstacles
+laser_scan_sensor: { sensor_frame: base_laser_link,
+                     data_type: LaserScan,
+                     topic: base_scan,
+                     marking: true,
+                     clearing: true,
+                     max_obstacle_height: 1.0,
+                     min_obstacle_height: 0.0,
+                     inf_is_valid: true}
+
+# point_cloud_sensor2: { sensor_frame: camera_link,
+#                        data_type: PointCloud2,
+#                        topic: robot_1/camera/depth_registered/points,
+#                        expected_update_rate: 1.0,
+#                        marking: true,
+#                        clearing: true,
+#                        max_obstacle_height: 1.0,
+#                        min_obstacle_height: 0.1}
+
+map_type: costmap
+track_unknown_space: true
+footprint_clearing_enabled: true
+combination_method: 1 #0: overwrite, 1: maximum, 99: nothing
+
+#map_type: voxel
+#origin_z: 0.0
+#z_resolution: 0.2
+#z_voxels: 10
+#unknown_threshold: 9
+#mark_threshold: 0
+#publish_voxel_map: false
+
+# raytrace_range has to be > obstacle_range (meters)
+obstacle_range: 9.5
+raytrace_range: 10.0
+observation_persistence: 0.0
+
+################################################################################
+#   INFLATION LAYER
+################################################################################
+# Maximum distance from obstacles at which a cost should be incurred (> than robot size)
+inflation_radius: 0.16
+cost_scaling_factor: 10.0
+
+################################################################################
+#   STATIC MAP LAYER
+# Cost at which a cell is considered an obstacle when a map is read from the map_server
+lethal_cost_threshold: 100
+
+################################################################################

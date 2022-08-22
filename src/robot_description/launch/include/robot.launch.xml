@@ -1,0 +1,27 @@
+<!-- jplaced@unizar.es
+ 2021, Universidad de Zaragoza -->
+
+<!-- Spawns the robot with a RGBD camera -->
+
+<launch>
+
+    <arg name="robot_name"/>
+    <arg name="init_pose"/>
+
+    <group ns="$(arg robot_name)">
+
+        <param name="robot_description" command="$(find xacro)/xacro '$(find robot_description)/launch/include/urdf/kobuki_standalone_camera.urdf.xacro'"/>
+
+        <!-- Spawn robot -->
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_$(arg robot_name)"
+              args="$(arg init_pose) -unpause -urdf -param robot_description -model $(arg robot_name)" respawn="false">
+        </node>
+
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+            <param name="publish_frequency" type="double" value="100.0" />
+            <param name="use_tf_static" type="bool" value="true" />
+        </node>
+
+  </group>
+
+</launch>

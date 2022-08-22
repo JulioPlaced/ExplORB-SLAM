@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>decision_maker</name>
+  <version>0.0.0</version>
+  <description>The decision_maker package</description>
+
+  <maintainer email="jplaced@unizar.es">julio</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- build_depend + build_export_depend + exec_depend -->
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>orb_slam2_ros</depend>
+
+  <export>
+
+  </export>
+</package>

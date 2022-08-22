@@ -1,0 +1,3 @@
+# Get the map as a an octomap
+---
+octomap_msgs/Octomap map
