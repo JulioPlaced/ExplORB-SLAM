@@ -15,9 +15,9 @@ find_package(catkin REQUIRED COMPONENTS roscpp
                                         std_msgs
                                         orb_slam2_ros)
 
-catkin_package(INCLUDE_DIRS     include
-               CATKIN_DEPENDS   roscpp
+# catkin_package(INCLUDE_DIRS     include
+catkin_package(CATKIN_DEPENDS   roscpp
                                 rospy
                                 std_msgs)
 
-include_directories(include ${catkin_INCLUDE_DIRS})
+# include_directories(include ${catkin_INCLUDE_DIRS})
