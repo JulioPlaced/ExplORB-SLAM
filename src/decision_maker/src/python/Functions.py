@@ -15,6 +15,16 @@ from typing import Tuple
 from visualization_msgs.msg import Marker
 from nav_msgs.msg import OccupancyGrid
 
+# NUMBA imports for GPU computations
+try:
+    import numba as nb
+    from numba import cuda
+    cuda.select_device(0)
+except ModuleNotFoundError:
+    print("Import error: Numba module not found")
+except Exception as e:
+    print("GPU not found: " + format(e))
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Functions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
