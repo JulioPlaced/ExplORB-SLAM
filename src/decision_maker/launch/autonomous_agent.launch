@@ -12,7 +12,7 @@
     <arg name="robot_namespace"     value="robot_1"/>
     <arg name="robot_number"        value="1"/>
     <arg name="camInfo_topic_name"  value="/$(arg robot_namespace)/camera/rgb/camera_info"/>
-    <arg name="gpu"                 value="true" />
+    <arg name="gpu"                 value="false" />
     <arg name="camera_type"         value="rgbd" /> <!-- 'rgbd' or 'stereo' -->
 
     <include file="$(find frontier_detector)/launch/frontiers.launch">
