@@ -15,13 +15,6 @@ from typing import Tuple
 from visualization_msgs.msg import Marker
 from nav_msgs.msg import OccupancyGrid
 
-# NUMBA imports for GPU computations
-import numba as nb
-from numba import cuda
-
-cuda.select_device(0)
-
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Functions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
