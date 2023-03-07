@@ -16,6 +16,16 @@ import numpy as np
 from numpy.linalg import norm
 from visualization_msgs.msg import Marker
 
+# NUMBA imports for GPU computations
+try:
+    import numba as nb
+    from numba import cuda
+    cuda.select_device(0)
+except ModuleNotFoundError:
+    print("Import error: Numba module not found")
+except Exception as e:
+    print("GPU not found: " + format(e))
+    
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Functions~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
