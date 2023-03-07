@@ -21,7 +21,6 @@ from nav_msgs.msg import OccupancyGrid
 def waitEnterKey():
     input("Press Enter to continue...")
 
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def euler2quaternion(roll: float, pitch: float, yaw: float) -> Tuple[float, float, float, float]:
     """
