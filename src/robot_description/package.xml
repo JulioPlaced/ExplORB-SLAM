@@ -23,6 +23,11 @@
   <depend>move_base</depend>
 
   <depend>octomap_rviz_plugins</depend>
+  <depend>teb_local_planner</depend>
+  <exec_depend>roslaunch</exec_depend>
+  
+  <!-- python deendencies -->
+  <!-- <exec_depend>python-numpy</exec_depend> -->
 
   <export>
 

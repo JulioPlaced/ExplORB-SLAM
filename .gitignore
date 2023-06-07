@@ -2,6 +2,8 @@ build
 devel
 logs
 .catkin_tools
+.catkin_workspace
+.vscode
 
 
 src/frontier_detector/src/python/__pycache__
