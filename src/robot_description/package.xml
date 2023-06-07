@@ -23,11 +23,21 @@
   <depend>move_base</depend>
 
   <depend>octomap_rviz_plugins</depend>
-  <depend>teb_local_planner</depend>
+
+  <exec_depend>teb_local_planner</exec_depend>
   <exec_depend>roslaunch</exec_depend>
   
-  <!-- python deendencies -->
-  <!-- <exec_depend>python-numpy</exec_depend> -->
+  <!-- This package depends on Python implementation of sophus library -->
+
+
+  <!-- python dependencies -->
+  <exec_depend>python3-numba</exec_depend>
+  <exec_depend>python3-scipy</exec_depend>
+  <exec_depend>python3-sklearn</exec_depend>
+
+  <!-- These python dependencies are currently unavailable in rosdep-->
+  <!-- sophuspy -->
+  <!-- nptyping -->
 
   <export>
 
