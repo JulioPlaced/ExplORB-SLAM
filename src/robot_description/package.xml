@@ -31,13 +31,24 @@
 
 
   <!-- python dependencies -->
+  <exec_depend>python3-numpy</exec_depend>
   <exec_depend>python3-numba</exec_depend>
   <exec_depend>python3-scipy</exec_depend>
   <exec_depend>python3-sklearn</exec_depend>
+  <exec_depend>python3-networkx</exec_depend>
+
+  <!-- pybind11_catkin cannot solve sophuspy dependencies -->
+  <!-- <exec_depend>pybind11_catkin</exec_depend> -->
 
   <!-- These python dependencies are currently unavailable in rosdep-->
   <!-- sophuspy -->
+  <!-- sophuspy dependencies shoudld be resolved by:
+       sudo apt-get install pybind11-dev
+       pip install sophuspy
+       -->
+
   <!-- nptyping -->
+  <!-- pip install nptyping -->
 
   <export>
 
